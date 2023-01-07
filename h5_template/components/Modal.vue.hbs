@@ -1,0 +1,70 @@
+<template>
+  <div
+    id="modal"
+    v-fixed
+    class="modal"
+  >
+    <div class="box">
+      \{{ msg }}
+      <div class="list">
+        <div
+          v-for="(item,index) in 100"
+          :key="index"
+          class="item"
+        >
+          \{{ item }}
+        </div>
+      </div>
+      <div
+        class="confirm"
+        @click="confirm"
+      >
+        确认
+      </div>
+      <div
+        class="close"
+        @click="close"
+      >
+        关闭
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const props = defineProps({
+	msg: {
+		type: String,
+		default: '组件默认的msg'
+	}
+});
+
+const emit = defineEmits(['confirm', 'close']);
+const close = () => {
+	emit('close', '点了关闭');
+};
+const confirm = () => {
+	emit('confirm', props.msg);
+};
+</script>
+
+<style lang="less" scoped>
+.modal {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .box {
+        width: 300px;
+        height: 500px;
+        overflow-y: scroll;
+        background: #fff;
+    }
+}
+</style>

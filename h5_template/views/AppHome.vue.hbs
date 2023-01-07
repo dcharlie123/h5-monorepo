@@ -1,0 +1,75 @@
+<template>
+  <div class="detail">
+{{#if needPinia}}
+\count：{{count.$state.counter}}
+    <div>
+      \双倍的count：{{count.doubleCount}}
+    </div>
+    <div class="add" @click="add">点我加加加+++</div>
+    <div class="minnus" @click="minnus">点我减减减---</div>
+{{/if}}
+    <div
+      v-for="(item,index) in 25"
+      :key="index"
+    >
+      \{{ item }}
+    </div>
+    <div
+      class="btn"
+      @click="openModal"
+    >
+      点击弹窗
+    </div>
+    <div class="list">
+      <div
+        v-for="(item,index) in 100"
+        :key="index"
+        class="item"
+      >
+        \{{ item }}
+      </div>
+    </div>
+    <teleport to="body">
+      <Modal
+        v-if="isShowModal"
+        :msg="msg"
+        @close="close"
+        @confirm="confirm"
+      />
+    </teleport>
+
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import Modal from '../components/Modal.vue';
+{{#if needPinia}}
+import { useCountStore } from '../store'; 
+const count = useCountStore();
+console.log(count);
+const add = () => {
+  count.add();
+}
+const minnus = () => {
+  count.minnus();
+}
+{{/if}}
+
+const msg = ref('传进去的值');
+const isShowModal = ref(false);
+const openModal = () => {
+	isShowModal.value = true;
+};
+const close = () => {
+	isShowModal.value = false;
+};
+const confirm = (val) => {
+	console.log(val);
+};
+
+</script>
+
+<style>
+
+</style>
