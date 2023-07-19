@@ -1,0 +1,42 @@
+import { createApp } from 'vue';
+import App from './App.vue';
+// 手机屏幕适配
+import '@/assets/css/flexiable.css';
+const app = createApp(App);
+
+{{#if needPinia}}
+import { createPinia } from 'pinia'
+app.use(createPinia())
+{{/if}}
+
+{{#if needRouter}}
+import router from './router.js';
+app.use(router);
+{{/if}}
+
+{{#if needDirective}}
+// 全局指令-记录body滑动距离
+app.directive('fixed', {
+	beforeMount() {
+		let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+		document.body.style.cssText += 'position:fixed;width:100%;top:-' + scrollTop + 'px;';
+	},
+	unmounted() {
+		let body = document.body;
+		body.style.position = '';
+		let top = body.style.top;
+		document.body.scrollTop = document.documentElement.scrollTop = -parseInt(top);
+		body.style.top = '';
+	}
+});
+{{/if}}
+
+{{#if needRouter}}
+// 路由先加载
+router.isReady().then(() => {
+	app.mount('#app');
+});
+{{else}}
+app.mount('#app');
+{{/if}}
+

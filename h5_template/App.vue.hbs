@@ -1,0 +1,20 @@
+<template>
+  {{#if needRouter}}
+  <router-view />
+  {{else}}
+  <div>欢迎使用H5模板</div>
+  {{/if}}
+</template>
+
+<script setup>
+console.log('my-app-name');
+</script>
+
+
+<style lang="less" scoped>
+.{{projectName}} {
+  font-size: 90rem;
+  color: #fff;
+}
+</style>
+     

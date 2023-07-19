@@ -1,0 +1,46 @@
+{{#if routerMode }}
+import { createRouter, createWebHistory } from 'vue-router';
+import home from './views/AppHome.vue';
+import NotFoundComponent from '@/components/NotFoundComponent.vue';
+import { projectName } from '../../../../config/projectName';
+
+const router = createRouter(
+	{
+		// HTML5模式：若静态资源不在根目录下，需要配置base路径
+		history: createWebHistory(import.meta.env.MODE === 'development'? '' : `/h5p/${projectName}/`),
+		routes: [
+			{ path: '/:pathMatch(.*)', component: NotFoundComponent },
+			{ path: '/', redirect: '/home' },
+			{ path: '/home', name: 'home', component: home }
+		],
+		scrollBehavior(to, from, savedPosition) {
+			// savedPosition: popstate导航可用，记录页面的滚动位置
+			console.log(to, from);
+			if (savedPosition) {
+				return savedPosition;
+			} else {
+				return {top: 0};
+			}
+		}
+	}
+);
+
+export default router;
+
+{{else}}
+import { createRouter, createWebHashHistory } from 'vue-router';
+import home from './views/AppHome.vue';
+
+const router = createRouter({
+	// hash模式
+	history: createWebHashHistory(),
+	routes: [
+		{ path: '/', redirect: '/home' },
+		{ path: '/home', name: 'home', component: home },
+	]
+});
+
+export default router;
+
+{{/if}}
+
