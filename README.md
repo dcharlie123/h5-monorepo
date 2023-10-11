@@ -7,6 +7,6 @@
 ### 使用
 - 安装全局依赖 `pnpm add xxx -w`
 - 安装全局开发依赖 `pnpm add xxx -D -w`
-- 运行某个h5 `pnpm --filter=xxx serve`
+- 运行某个h5 `pnpm --filter=xxx serve`（注：xxx指的是package.json中name即包名）或者`pnpm --dir=路径 serve`
 - 打包某个h5 `pnpm --filter=xxx build`
 - 生成h5文件 `pnpm -w gen`
